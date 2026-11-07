@@ -1,53 +1,76 @@
+
 using UnityEngine;
 
 public class hareketkarakter : MonoBehaviour
 {
+    //değişken atama
     [SerializeField] private float WalkSpeed= 15f;
-    [SerializeField] private float RunSpeed= 50f;
+    [SerializeField] private float RunSpeed= 20f;
     [SerializeField] private float JumpHeight= 20f;
-    private float CurrentSpeed;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private float turnSpeed = 100f;
+    private float currentSpeed;
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+
     void Start()
     {
-        
+        originalPosition = transform.position;
+        originalRotation = transform.rotation;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
+        //fonksiyon çağırma 
         Hareket();
         SpeedControl();
+        fixedPosition();
     }
-    void SpeedControl()
+     
+
+    void SpeedControl() 
     {
-       CurrentSpeed = WalkSpeed;
+       currentSpeed = WalkSpeed;
        if (Input.GetKey(KeyCode.LeftShift))
        {
-        CurrentSpeed=RunSpeed;
+        currentSpeed=RunSpeed;
        }
     }
-    
+
+    void fixedPosition()
+    {
+    if (Input.GetKeyDown(KeyCode.F))
+    {
+        transform.position = originalPosition;
+        transform.rotation = originalRotation;
+    }
+    }
+
     void Hareket()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += Vector3.forward*CurrentSpeed*Time.deltaTime;
-        }
-        if(Input.GetKey(KeyCode.S))
-        {
-            transform.position +=Vector3.back*CurrentSpeed*Time.deltaTime;
-        }
-        if(Input.GetKey(KeyCode.A))
-        {
-            transform.position +=Vector3.left*CurrentSpeed*Time.deltaTime;
-        }
-        if(Input.GetKey(KeyCode.D))
-        {
-            transform.position +=Vector3.right*CurrentSpeed*Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            transform.position += Vector3.up*CurrentSpeed*Time.deltaTime;
-        }
+    if (Input.GetKey(KeyCode.W))
+    {
+    transform.position += transform.forward * currentSpeed * Time.deltaTime;
+    }
+
+    if (Input.GetKey(KeyCode.S))
+    {
+    transform.position -= transform.forward * currentSpeed * Time.deltaTime;
+    }
+
+    if (Input.GetKey(KeyCode.D))
+    {
+    transform.Rotate(Vector3.up * turnSpeed * Time.deltaTime);
+    }
+
+    if (Input.GetKey(KeyCode.A))
+    {
+    transform.Rotate(Vector3.down * turnSpeed * Time.deltaTime);
+    }
+
+    if (Input.GetKey(KeyCode.Space))
+    { 
+    transform.position += Vector3.up * JumpHeight * Time.deltaTime;
+    }
     }
 }
