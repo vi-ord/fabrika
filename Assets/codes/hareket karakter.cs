@@ -4,9 +4,9 @@ using UnityEngine;
 public class hareketkarakter : MonoBehaviour
 {
     //değişken atama
-    [SerializeField] private float WalkSpeed= 15f;
-    [SerializeField] private float RunSpeed= 20f;
-    [SerializeField] private float JumpHeight= 20f;
+    [SerializeField] private float WalkSpeed= 5f;
+    [SerializeField] private float RunSpeed= 10f;
+    [SerializeField] private float JumpHeight= 10f;
     [SerializeField] private float turnSpeed = 100f;
     private float currentSpeed;
     private Vector3 originalPosition;
@@ -50,12 +50,12 @@ public class hareketkarakter : MonoBehaviour
     {
     if (Input.GetKey(KeyCode.W))
     {
-    transform.position += transform.forward * currentSpeed * Time.deltaTime;
+    transform.position -= transform.forward * currentSpeed * Time.deltaTime;
     }
 
     if (Input.GetKey(KeyCode.S))
     {
-    transform.position -= transform.forward * currentSpeed * Time.deltaTime;
+    transform.position += transform.forward * currentSpeed * Time.deltaTime;
     }
 
     if (Input.GetKey(KeyCode.D))
